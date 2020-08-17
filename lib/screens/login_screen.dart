@@ -37,18 +37,25 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           ),
                         ),
-                        Center(
-                          child: Text(
-                            'Create split groups with friends & colleagues to pay merchants',
-                            style: TextStyle(
-                              fontFamily: 'CircularStd-Book',
-                              //fontWeight: FontWeight.w500,
-                              fontSize: 16,
-                              color: Color.fromRGBO(64, 64, 64, 1),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          child: Center(
+                            child: Text(
+                              'Create split groups with friends & colleagues to pay merchants',
+                              style: TextStyle(
+                                fontFamily: 'CircularStd-Book',
+                                //fontWeight: FontWeight.w500,
+                                fontSize: 16,
+                                color: Color.fromRGBO(64, 64, 64, 1),
+                              ),
+                              textAlign: TextAlign.center,
                             ),
-                            textAlign: TextAlign.center,
                           ),
                         ),
+                        SizedBox(height: size.height * .03),
+                        _signInButton(),
+                        _createAccountButton(),
+                        SizedBox(height: size.height * .05)
                       ],
                     ),
                   )
@@ -62,27 +69,65 @@ class _LoginScreenState extends State<LoginScreen> {
 
 
   Widget _signInButton() {
-    return OutlineButton(
-      splashColor: Colors.grey,
-      onPressed: () {},
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
-      highlightElevation: 0,
-      borderSide: BorderSide(color: Colors.grey),
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
+    return Container(
+      height: 50.0,
+      margin: EdgeInsets.fromLTRB(20, 8, 20, 8),
+      child: Container(
+        decoration: BoxDecoration(
+          border: Border.all(
+            color: Color.fromRGBO(47, 41, 103, 1),
+            style: BorderStyle.solid,
+            width: 0.4,
+          ),
+          color:Color.fromRGBO(47, 41, 103, 1),
+          borderRadius: BorderRadius.circular(8.0),
+        ),
         child: Row(
-          mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Image(image: AssetImage("assets/images/google_logo.png"), height: 35.0),
-            Padding(
-              padding: const EdgeInsets.only(left: 10),
+            Image(image: AssetImage("assets/images/google_logo.png"), height: 22.0),
+            Container(
+              margin: EdgeInsets.only(left: 10),
               child: Text(
-                'Sign in with Google',
+                'Google Login',
                 style: TextStyle(
-                  fontSize: 20,
-                  color: Colors.grey,
+                    fontSize: 18,
+                    fontWeight: FontWeight.normal,
+                    letterSpacing: .5,
+                    color: Colors.white
                 ),
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _createAccountButton() {
+    return Container(
+      height: 50.0,
+      margin: EdgeInsets.fromLTRB(20, 8, 20, 8),
+      child: Container(
+        decoration: BoxDecoration(
+          border: Border.all(
+            color: Color.fromRGBO(47, 41, 103, 1),
+            style: BorderStyle.solid,
+            width: 0.4,
+          ),
+          color: Colors.transparent,
+          borderRadius: BorderRadius.circular(8.0),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              'Create an Account',
+              style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.normal,
+                  letterSpacing: .5,
+                  color: Color.fromRGBO(47, 41, 103, 1)
               ),
             )
           ],

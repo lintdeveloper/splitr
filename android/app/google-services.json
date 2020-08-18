@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "906034350480",
+    "firebase_url": "https://splitr-dedcc.firebaseio.com",
+    "project_id": "splitr-dedcc",
+    "storage_bucket": "splitr-dedcc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:906034350480:android:c1fe48c040ea9da63a4b15",
+        "android_client_info": {
+          "package_name": "com.example.splitr"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "906034350480-cund319sm53pjdahvdoplckcup15tu2e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB0UpnnNnKeCBKwmntzTJ-odniggjRkeoA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "906034350480-cund319sm53pjdahvdoplckcup15tu2e.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

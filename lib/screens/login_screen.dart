@@ -29,11 +29,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           child: Center(
                             child: Text(
                               'Save and split bills with friends',
-                              style: TextStyle(
-                                  fontFamily: 'CircularStd-Medium',
-                                  // fontWeight: FontWeight.w500,
-                                  fontSize: 22,
-                                  color: Color.fromRGBO(47, 41, 103, 1)),
+                              style: Theme.of(context).textTheme.headline3
                             ),
                           ),
                         ),
@@ -42,12 +38,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           child: Center(
                             child: Text(
                               'Create split groups with friends & colleagues to pay merchants',
-                              style: TextStyle(
-                                fontFamily: 'CircularStd-Book',
-                                //fontWeight: FontWeight.w500,
-                                fontSize: 16,
-                                color: Color.fromRGBO(64, 64, 64, 1),
-                              ),
+                              style: Theme.of(context).textTheme.bodyText2,
                               textAlign: TextAlign.center,
                             ),
                           ),

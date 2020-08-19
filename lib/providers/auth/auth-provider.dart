@@ -31,7 +31,7 @@ class AuthProvider with ChangeNotifier {
     try {
       _status = Status.Authenticating;
       notifyListeners();
-      _authService.signInWithGoogle(_googleSignIn);
+      _authService.signInWithGoogle(_googleSignIn, _auth);
       return true;
     } catch (e) {
       print(e);
@@ -44,8 +44,7 @@ class AuthProvider with ChangeNotifier {
   /// User signs out
   @override
   Future<void> signOutWithGoogle() async {
-    _auth.signOut();
-    _googleSignIn.signOut();
+    _authService.signOutWithGoogle(_googleSignIn, _auth);
     _status = Status.Unauthenticated;
     notifyListeners();
     return Future.delayed(Duration.zero);

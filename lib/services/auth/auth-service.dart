@@ -4,11 +4,10 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:splitr/services/auth/base-auth.dart';
 
 class AuthService implements BaseAuth {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   /// User sign in with a google account
   @override
-  Future<bool> signInWithGoogle( GoogleSignIn _googleSignIn) async {
+  Future<bool> signInWithGoogle( GoogleSignIn _googleSignIn, FirebaseAuth _auth) async {
     try {
       final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
       final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
@@ -26,7 +25,7 @@ class AuthService implements BaseAuth {
 
   /// User signs out
   @override
-  Future<void> signOutWithGoogle(GoogleSignIn _googleSignIn) async {
+  Future<void> signOutWithGoogle(GoogleSignIn _googleSignIn, FirebaseAuth _auth) async {
     _auth.signOut();
     _googleSignIn.signOut();
     return Future.delayed(Duration.zero);
@@ -34,7 +33,7 @@ class AuthService implements BaseAuth {
 
   /// Gets the current user
   @override
-  Future<FirebaseUser> getCurrentUser() async {
+  Future<FirebaseUser> getCurrentUser(FirebaseAuth _auth) async {
     FirebaseUser user = await _auth.currentUser();
     return user;
   }

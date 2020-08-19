@@ -1,9 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
+import 'package:splitr/root.dart';
+import 'package:splitr/services/services.dart';
 import 'package:splitr/utils/utils.dart';
 import 'screens/screens.dart';
 
-void main() {
-  runApp(App());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown])
+      .then((_) => runApp(MultiProvider(
+        child: App(),
+        providers: [
+          ChangeNotifierProvider(create: (context) => AuthService.instance())
+        ],
+      ))
+  );
 }
 
 class App extends StatelessWidget {
@@ -13,7 +26,7 @@ class App extends StatelessWidget {
       title: appName,
       debugShowCheckedModeBanner: false,
       theme: lightTheme,
-      home: LoginScreen(),
+      home: RootScreen(),
     );
   }
 }

@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:provider/provider.dart';
 import 'package:splitr/mixins/responsive_safe_area.dart';
+import 'package:splitr/services/auth/auth-service.dart';
+import 'package:splitr/utils/consts.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -7,9 +11,14 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final _key = GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<AuthService>(context);
+
     return Scaffold(
+        key: _key,
         body: ResponsiveSafeArea(
           builder: (context, size) {
             return Container(
@@ -44,7 +53,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                         ),
                         SizedBox(height: size.height * .03),
-                        _signInButton(),
+                        _signInButton(user),
                         _createAccountButton(),
                         SizedBox(height: size.height * .05)
                       ],
@@ -59,37 +68,46 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
 
-  Widget _signInButton() {
-    return Container(
-      height: 50.0,
-      margin: EdgeInsets.fromLTRB(20, 8, 20, 8),
-      child: Container(
-        decoration: BoxDecoration(
-          border: Border.all(
-            color: Color.fromRGBO(47, 41, 103, 1),
-            style: BorderStyle.solid,
-            width: 0.4,
+  Widget _signInButton(user) {
+    return GestureDetector(
+      onTap: () async {
+        if (!await user.signInWithGoogle())
+          _key.currentState.showSnackBar(SnackBar(
+            content: Text("Something is wrong"),
+          ));
+      },
+      child: user.status == Status.Authenticating ?
+      Center(child: SpinKitWave(color: PURPLE_HUE, type: SpinKitWaveType.center)) :Container(
+        height: 50.0,
+        margin: EdgeInsets.fromLTRB(20, 8, 20, 8),
+        child: Container(
+          decoration: BoxDecoration(
+            border: Border.all(
+              color: PURPLE_HUE,
+              style: BorderStyle.solid,
+              width: 0.4,
+            ),
+            color:PURPLE_HUE,
+            borderRadius: BorderRadius.circular(8.0),
           ),
-          color:Color.fromRGBO(47, 41, 103, 1),
-          borderRadius: BorderRadius.circular(8.0),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Image(image: AssetImage("assets/images/google_logo.png"), height: 22.0),
-            Container(
-              margin: EdgeInsets.only(left: 10),
-              child: Text(
-                'Google Login',
-                style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.normal,
-                    letterSpacing: .5,
-                    color: Colors.white
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Image(image: AssetImage("assets/images/google_logo.png"), height: 22.0),
+              Container(
+                margin: EdgeInsets.only(left: 10),
+                child: Text(
+                  'Google Login',
+                  style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.normal,
+                      letterSpacing: .5,
+                      color: Colors.white
+                  ),
                 ),
-              ),
-            )
-          ],
+              )
+            ],
+          ),
         ),
       ),
     );

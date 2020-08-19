@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 import 'package:splitr/mixins/responsive_safe_area.dart';
+import 'package:splitr/models/api_response_model.dart';
 import 'package:splitr/providers/auth/auth-provider.dart';
 import 'package:splitr/utils/consts.dart';
+import 'package:splitr/utils/utils.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -71,12 +73,11 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget _signInButton(AuthProvider user) {
     return GestureDetector(
       onTap: () async {
-        bool test = await user.signInWithGoogle();
-        print(test);
-//        if (!await user.signInWithGoogle())
-//          _key.currentState.showSnackBar(SnackBar(
-//            content: Text("Something is wrong"),
-//          ));
+        ApiResponse apiResponse = await user.signInWithGoogle();
+
+        if (!apiResponse.status) {
+          ShowSnackBar(scaffoldKey: _key, msg: apiResponse.message);
+        }
       },
       child: user.status == Status.Authenticating ?
       Center(child: SpinKitWave(color: PURPLE_HUE, type: SpinKitWaveType.center)) :Container(
@@ -146,4 +147,12 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
   }
+
+
+  void errorCallback(String msg) {
+    Navigator.of(context).pop();
+    ShowSnackBar(scaffoldKey: _key, msg: msg);
+  }
 }
+
+

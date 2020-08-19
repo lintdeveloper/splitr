@@ -14,3 +14,10 @@ const Color BLACK = Color.fromRGBO(26, 25, 25, 1);
 
 /// TextStyle
 const TextStyle greenTextStyle =  TextStyle(fontSize: 16, color: GREEN_HUE, fontWeight: FontWeight.w600);
+const BASE_URL = "https://us-central1-splitr-dedcc.cloudfunctions.net";
+
+const int TIME_OUT_SECONDS = 30;
+const int TIME_OUT_PROFILE_SECONDS = 90;
+const String TIME_OUT_MSG = 'The request timed out';
+const String SOCKET_EXCEPTION_MSG = 'No Internet connection';
+const String ERROR_GOOGLE_SIGNIN_MSG = "Error Sign in User with Google";

@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:splitr/models/api_response_model.dart';
 import 'package:splitr/providers/auth/index.dart';
 
 enum Status { Uninitialized, Authenticated, Authenticating, Unauthenticated }
@@ -27,17 +28,15 @@ class AuthProvider with ChangeNotifier {
 
   /// User sign in with a google account
   @override
-  Future<bool> signInWithGoogle() async {
+  Future<ApiResponse> signInWithGoogle() async {
     try {
       _status = Status.Authenticating;
       notifyListeners();
-      _authService.signInWithGoogle(_googleSignIn, _auth);
-      return true;
+
+      return  await _authService.signInWithGoogle(_googleSignIn, _auth);
     } catch (e) {
-      print(e);
       _status = Status.Unauthenticated;
       notifyListeners();
-      return false;
     }
   }
 

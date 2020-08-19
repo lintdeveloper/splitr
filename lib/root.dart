@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:splitr/screens/screens.dart';
-import 'package:splitr/services/auth/auth-service.dart';
+
+import 'providers/auth/auth-provider.dart';
 
 class RootScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Consumer(builder: (context, AuthService auth, _) {
+    return Consumer(builder: (context, AuthProvider auth, _) {
       switch (auth.status) {
         case Status.Uninitialized:
           return SplashScreen();

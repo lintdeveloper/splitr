@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:splitr/mixins/mixins.dart';
-import 'package:splitr/services/services.dart';
+import 'package:splitr/providers/auth/auth-provider.dart';
 import 'package:splitr/utils/utils.dart';
 import 'package:splitr/widgets/widgets.dart';
 
@@ -39,7 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
           IconButton(
               icon: Icon(CupertinoIcons.clear_thick, color: PURPLE_HUE),
               onPressed: () =>
-                  Provider.of<AuthService>(context, listen: false).signOutWithGoogle())
+                  Provider.of<AuthProvider>(context, listen: false).signOutWithGoogle())
         ],
       ),
       body: ResponsiveSafeArea(

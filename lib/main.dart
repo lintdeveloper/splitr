@@ -4,7 +4,8 @@ import 'package:provider/provider.dart';
 import 'package:splitr/root.dart';
 import 'package:splitr/services/services.dart';
 import 'package:splitr/utils/utils.dart';
-import 'screens/screens.dart';
+
+import 'providers/auth/auth-provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -13,7 +14,7 @@ void main() async {
       .then((_) => runApp(MultiProvider(
         child: App(),
         providers: [
-          ChangeNotifierProvider(create: (context) => AuthService.instance())
+          ChangeNotifierProvider(create: (context) => AuthProvider.instance())
         ],
       ))
   );

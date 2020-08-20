@@ -4,7 +4,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:splitr/models/api_response_model.dart';
 import 'package:splitr/providers/auth/index.dart';
 
-enum Status { Uninitialized, Authenticated, Authenticating, Unauthenticated }
+enum Status { Uninitialized, Authenticated, Authenticating, Unauthenticated, AccountSettingUp}
 
 class AuthProvider with ChangeNotifier {
 
@@ -24,7 +24,7 @@ class AuthProvider with ChangeNotifier {
 
   Status get status => _status;
   FirebaseUser get user => _user;
-
+  ApiResponse _response;
 
   /// User sign in with a google account
   @override
@@ -32,13 +32,27 @@ class AuthProvider with ChangeNotifier {
     try {
       _status = Status.Authenticating;
       notifyListeners();
-
-      return  await _authService.signInWithGoogle(_googleSignIn, _auth);
+      _response = await _authService.signInWithGoogle(_googleSignIn, _auth);
+      return _response;
     } catch (e) {
       _status = Status.Unauthenticated;
       notifyListeners();
     }
   }
+
+  /// User setup and account with google
+  Future<ApiResponse> setUpWithGoogle() async {
+    try {
+      _status = Status.AccountSettingUp;
+      notifyListeners();
+      _response =  await _authService.setUpWithGoogle(_googleSignIn, _auth);
+      print(_response.status);
+      return _response;
+    } catch (e) {
+      _status = Status.Unauthenticated;
+      notifyListeners();
+    }
+}
 
   /// User signs out
   @override

@@ -23,45 +23,47 @@ class _LoginScreenState extends State<LoginScreen> {
         key: _key,
         body: ResponsiveSafeArea(
           builder: (context, size) {
-            return Container(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Container(
-                    color: Color.fromRGBO(239, 239, 239, 1),
-                    height: size.height * .55,
-                    width: size.width,
-                  ),
-                  Container(
-                    child: Column(
-                      children: [
-                        Container(
-                          margin: EdgeInsets.symmetric(vertical: 6),
-                          child: Center(
-                            child: Text(
-                              'Save and split bills with friends',
-                              style: Theme.of(context).textTheme.headline3
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 20),
-                          child: Center(
-                            child: Text(
-                              'Create split groups with friends & colleagues to pay merchants',
-                              style: Theme.of(context).textTheme.bodyText2,
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: size.height * .03),
-                        _signInButton(user),
-                        _createAccountButton(),
-                        SizedBox(height: size.height * .05)
-                      ],
+            return SingleChildScrollView(
+              child: Container(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Container(
+                      color: Color.fromRGBO(239, 239, 239, 1),
+                      height: size.height * .55,
+                      width: size.width,
                     ),
-                  )
-                ],
+                    Container(
+                      child: Column(
+                        children: [
+                          Container(
+                            margin: EdgeInsets.symmetric(vertical: 6),
+                            child: Center(
+                              child: Text(
+                                'Save and split bills with friends',
+                                style: Theme.of(context).textTheme.headline3
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 20),
+                            child: Center(
+                              child: Text(
+                                'Create split groups with friends & colleagues to pay merchants',
+                                style: Theme.of(context).textTheme.bodyText2,
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: size.height * .03),
+                          _signInButton(user),
+                          _createAccountButton(user),
+                          SizedBox(height: size.height * .05)
+                        ],
+                      ),
+                    )
+                  ],
+                ),
               ),
             );
           },
@@ -71,6 +73,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
 
   Widget _signInButton(AuthProvider user) {
+
     return GestureDetector(
       onTap: () async {
         ApiResponse apiResponse = await user.signInWithGoogle();
@@ -116,33 +119,46 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Widget _createAccountButton() {
-    return Container(
-      height: 50.0,
-      margin: EdgeInsets.fromLTRB(20, 8, 20, 8),
-      child: Container(
-        decoration: BoxDecoration(
-          border: Border.all(
-            color: Color.fromRGBO(47, 41, 103, 1),
-            style: BorderStyle.solid,
-            width: 0.4,
+  Widget _createAccountButton(AuthProvider user) {
+    print(user.status);
+
+    return GestureDetector(
+      onTap: () async {
+        ApiResponse apiResponse = await user.setUpWithGoogle();
+
+        if (apiResponse.status) {
+          ShowSnackBar(scaffoldKey: _key, msg: apiResponse.message);
+        } else {
+          ShowSnackBar(scaffoldKey: _key, msg: apiResponse.message);
+        }},
+      child: user.status == Status.AccountSettingUp ?
+      Center(child: SpinKitWave(color: PURPLE_HUE, type: SpinKitWaveType.center)) : Container(
+        height: 50.0,
+        margin: EdgeInsets.fromLTRB(20, 8, 20, 8),
+        child: Container(
+          decoration: BoxDecoration(
+            border: Border.all(
+              color: Color.fromRGBO(47, 41, 103, 1),
+              style: BorderStyle.solid,
+              width: 0.4,
+            ),
+            color: Colors.transparent,
+            borderRadius: BorderRadius.circular(8.0),
           ),
-          color: Colors.transparent,
-          borderRadius: BorderRadius.circular(8.0),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'Create an Account',
-              style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.normal,
-                  letterSpacing: .5,
-                  color: Color.fromRGBO(47, 41, 103, 1)
-              ),
-            )
-          ],
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text(
+                'Create an Account',
+                style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.normal,
+                    letterSpacing: .5,
+                    color: Color.fromRGBO(47, 41, 103, 1)
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );

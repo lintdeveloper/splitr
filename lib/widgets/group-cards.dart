@@ -147,4 +147,10 @@ class _GroupCardsState extends State<GroupCards> {
       ],
     );
   }
+
+  String formatPrice(String price){
+      String _price = (int.parse(price) * 100).toStringAsFixed(2);
+
+      return _price;
+  }
 }

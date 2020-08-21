@@ -41,7 +41,6 @@ class _GroupCardsState extends State<GroupCards> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget>[
                               Text("Sandwich", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
-
                               RichText(text: TextSpan(
                                 text: "₦ ",
                                 style: TextStyle(fontSize: 12, color: BLACK.withOpacity(0.6)),

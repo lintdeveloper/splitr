@@ -3,7 +3,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:splitr/mixins/mixins.dart';
-import 'package:splitr/providers/auth/auth-provider.dart';
+import 'package:splitr/providers/auth/auth_provider.dart';
+import 'package:splitr/router.dart';
+import 'package:splitr/screens/create_group_screen.dart';
 import 'package:splitr/utils/utils.dart';
 import 'package:splitr/widgets/widgets.dart';
 
@@ -57,7 +59,7 @@ class _HomeScreenState extends State<HomeScreen> {
         },
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: null,
+        onPressed: () => Navigator.pushNamed(context, CreateGroupScreen.routeName),
         child: Icon(Icons.add),
       ),
     );

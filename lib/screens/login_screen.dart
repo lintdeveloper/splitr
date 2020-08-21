@@ -3,7 +3,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 import 'package:splitr/mixins/responsive_safe_area.dart';
 import 'package:splitr/models/api_response_model.dart';
-import 'package:splitr/providers/auth/auth-provider.dart';
+import 'package:splitr/providers/auth/auth_provider.dart';
 import 'package:splitr/utils/consts.dart';
 import 'package:splitr/utils/utils.dart';
 

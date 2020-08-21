@@ -60,6 +60,11 @@ class AuthProvider with ChangeNotifier {
     }
   }
 
+  void homeScreen() {
+    _status = Status.Authenticated;
+    notifyListeners();
+  }
+
   /// User signs out
   @override
   Future<void> signOutWithGoogle() async {

@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:http/http.dart' as http;
+import 'package:splitr/models/group/group.dart';
 import 'package:splitr/models/models.dart';
 import 'package:splitr/services/auth/base_auth.dart';
 import 'package:splitr/services/groups/base_group.dart';
@@ -96,16 +97,17 @@ class GroupsService implements BaseGroup {
 
     String responseUTF8 = utf8.decode(responsePayload.bodyBytes);
     final body = jsonDecode(responseUTF8);
-
-      print("Create Group");
-      print(body);
     return ApiResponse.fromJson(body);
   }
 
   @override
-  Future<List<GroupResponse>> getGroups(String _mail) {
+  Future<List<GroupList>> getGroups(String _mail) async {
     String url = BASE_URL + '/test/api/v1/users/$_mail/groups';
-    // TODO: implement getGroups
-    throw UnimplementedError();
+    final responsePayload = await http.get(url,
+        headers: _headers);
+    String responseUTF8 = utf8.decode(responsePayload.bodyBytes);
+    final body = jsonDecode(responseUTF8);
+    print(body);
+    return GroupResponse.fromJson(body).groupList;
   }
 }

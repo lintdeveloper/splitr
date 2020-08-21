@@ -77,7 +77,6 @@ class ShowSuccessDialog {
                   ),
                   Container(
                     margin: const EdgeInsets.only(top: 30,bottom: 30),
-//                  color: Color.fromRGBO(62, 211, 132, 1),
                     width: MediaQuery.of(context).size.width,
                     height: 48,
                     child: RaisedButton(

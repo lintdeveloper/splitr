@@ -1,11 +1,16 @@
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:line_icons/line_icons.dart';
-import 'package:splitr/models/models.dart';
+import 'package:splitr/models/group/group.dart';
 import 'package:splitr/utils/utils.dart';
 import 'package:splitr/widgets/widgets.dart';
 
 class GroupCards extends StatefulWidget {
+  List<GroupList> groupsList;
+  String user;
+
+  GroupCards({Key key, this.groupsList, this.user}) : super(key: key);
+
   @override
   _GroupCardsState createState() => _GroupCardsState();
 }
@@ -22,7 +27,7 @@ class _GroupCardsState extends State<GroupCards> {
       children: <Widget>[
         Expanded(
           child: PageView.builder(
-            itemCount: _itemLength,
+            itemCount: widget.groupsList.length,
             controller: PageController(viewportFraction: 0.8),
             onPageChanged: (int index) => setState(() => _index = index),
             itemBuilder: (_, i) {
@@ -32,7 +37,8 @@ class _GroupCardsState extends State<GroupCards> {
                   padding: EdgeInsets.symmetric(vertical: 8),
                   child: Card(
                     elevation: 0.5,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10)),
                     child: Container(
                       margin: EdgeInsets.all(8),
                       child: Column(
@@ -40,27 +46,41 @@ class _GroupCardsState extends State<GroupCards> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget>[
-                              Text("Sandwich", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
-                              RichText(text: TextSpan(
-                                text: "₦ ",
-                                style: TextStyle(fontSize: 12, color: BLACK.withOpacity(0.6)),
-                                children: [
-                                  new TextSpan(
-                                    text: '20,000.00',
-                                    style: TextStyle(fontSize: 14, color: BLACK),
-                                  )
-                                ]
-                              ))
+                              Text("${widget.groupsList[i].name}",
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w500)),
+                              RichText(
+                                  text: TextSpan(
+                                      text: "₦ ",
+                                      style: TextStyle(
+                                          fontSize: 12,
+                                          color: BLACK.withOpacity(0.6)),
+                                      children: [
+                                    new TextSpan(
+                                      text: '20,000.00',
+                                      style:
+                                          TextStyle(fontSize: 14, color: BLACK),
+                                    )
+                                  ]))
                             ],
                           ),
                           SizedBox(height: 12),
                           Expanded(
                             child: ListView.builder(
-                              scrollDirection: Axis.horizontal,
-                              itemCount: membersList.length,
-                              itemBuilder: (context, index) => MemberItem(index, "musabrillz@gmail.com")
-
-                            ),
+                                scrollDirection: Axis.horizontal,
+                                itemCount: widget.groupsList[i].members.length,
+                                itemBuilder: (context, index) {
+                                  final member =
+                                      widget.groupsList[index].members[index];
+                                  return MemberItem(
+                                    amount: member.amount,
+                                    displayName: member.displayName,
+                                    email: member.email,
+                                    photoUrl: member.photoUrl,
+                                    user: widget.user,
+                                  );
+                                }),
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -75,7 +95,10 @@ class _GroupCardsState extends State<GroupCards> {
                                   ],
                                 ),
                               ),
-                              Icon(LineIcons.angle_right, size: 24,)
+                              Icon(
+                                LineIcons.angle_right,
+                                size: 24,
+                              )
                             ],
                           )
                         ],
@@ -92,16 +115,14 @@ class _GroupCardsState extends State<GroupCards> {
           child: AnimatedContainer(
             duration: Duration(milliseconds: 150),
             child: DotsIndicator(
-              dotsCount: _itemLength,
+              dotsCount: widget.groupsList.length,
               position: double.parse(_index.toString()),
               decorator: DotsDecorator(
-                size: const Size.square(9.0),
-                activeSize: const Size(18.0, 8.0),
-                activeShape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(5.0)
-                ),
-                spacing: EdgeInsets.symmetric(horizontal: 3, vertical: 6)
-              ),
+                  size: const Size.square(9.0),
+                  activeSize: const Size(18.0, 8.0),
+                  activeShape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5.0)),
+                  spacing: EdgeInsets.symmetric(horizontal: 3, vertical: 6)),
             ),
           ),
 //                        child: Row(

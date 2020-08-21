@@ -7,7 +7,14 @@ class GroupsProvider extends ChangeNotifier {
   GroupsService _groupsService;
   ApiResponse _response;
   List<GroupList> _groupList;
+  String _group;
 
+  set setGroupId(String val) {
+    _group = val.trim();
+    notifyListeners();
+  }
+
+  String get groupId => _group;
 
   GroupsProvider.instance()
     : _groupsService = GroupsService();
@@ -16,6 +23,11 @@ class GroupsProvider extends ChangeNotifier {
   Future<ApiResponse> createGroup({String email, Map groupRequest}) async {
       _response = await _groupsService.createGroup(email, groupRequest);
       return _response;
+  }
+
+  Future<ApiResponse> addGroupMember({String email, String membersEmail, String group}) async {
+    _response = await _groupsService.addGroupMember(email, membersEmail, group);
+    return _response;
   }
 
   Future<List<GroupList>> getGroupList({String email}) async {

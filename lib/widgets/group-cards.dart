@@ -1,7 +1,10 @@
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:line_icons/line_icons.dart';
+import 'package:provider/provider.dart';
 import 'package:splitr/models/group/group.dart';
+import 'package:splitr/providers/groups/groups_provider.dart';
+import 'package:splitr/screens/add_member_screen.dart';
 import 'package:splitr/utils/utils.dart';
 import 'package:splitr/widgets/widgets.dart';
 
@@ -17,12 +20,12 @@ class GroupCards extends StatefulWidget {
 
 class _GroupCardsState extends State<GroupCards> {
   int _index = 0;
-  int _itemLength = 5;
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    final group = Provider.of<GroupsProvider>(context);
 
+    Size size = MediaQuery.of(context).size;
     return Column(
       children: <Widget>[
         Expanded(
@@ -58,7 +61,7 @@ class _GroupCardsState extends State<GroupCards> {
                                           color: BLACK.withOpacity(0.6)),
                                       children: [
                                     new TextSpan(
-                                      text: '20,000.00',
+                                      text: '${widget.groupsList[i].amount}',
                                       style:
                                           TextStyle(fontSize: 14, color: BLACK),
                                     )
@@ -86,13 +89,19 @@ class _GroupCardsState extends State<GroupCards> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget>[
                               Container(
-                                child: Row(
-                                  children: <Widget>[
-                                    Icon(LineIcons.plus_circle, size: 26),
-                                    Container(
-                                        margin: EdgeInsets.only(left: 4),
-                                        child: Text("Add a member"))
-                                  ],
+                                child: GestureDetector(
+                                  onTap: () => {
+                                    group.setGroupId =widget.groupsList[i].name,
+                                    Navigator.of(context).pushNamed(AddMemberScreen.routeName)
+                                  },
+                                  child: Row(
+                                    children: <Widget>[
+                                      Icon(LineIcons.plus_circle, size: 26),
+                                      Container(
+                                          margin: EdgeInsets.only(left: 4),
+                                          child: Text("Add a member"))
+                                    ],
+                                  ),
                                 ),
                               ),
                               Icon(
@@ -120,6 +129,7 @@ class _GroupCardsState extends State<GroupCards> {
               decorator: DotsDecorator(
                   size: const Size.square(9.0),
                   activeSize: const Size(18.0, 8.0),
+                  activeColor: PURPLE_HUE,
                   activeShape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(5.0)),
                   spacing: EdgeInsets.symmetric(horizontal: 3, vertical: 6)),

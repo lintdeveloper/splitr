@@ -3,7 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:line_icons/line_icons.dart';
+import 'package:provider/provider.dart';
 import 'package:splitr/mixins/mixins.dart';
+import 'package:splitr/models/models.dart';
+import 'package:splitr/providers/groups/groups_provider.dart';
 import 'package:splitr/utils/consts.dart';
 import 'package:splitr/utils/utils.dart';
 
@@ -17,19 +20,22 @@ class CreateGroupScreen extends StatefulWidget {
 class _CreateGroupScreenState extends State<CreateGroupScreen> {
   final _formKey = GlobalKey<FormState>();
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-  final _controller = TextEditingController();
-  static const _locale = 'en';
-
+  final _groupController = TextEditingController();
+  final _amountController = TextEditingController();
   String _groupName = "";
   String _amount = "";
 
-  String _formatNumber(String string) {
-    final format = NumberFormat.decimalPattern(_locale);
-    return format.format(int.parse(string));
+  @override
+  void dispose() {
+    _groupController.clear();
+    _amountController.clear();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    final group = Provider.of<GroupsProvider>(context);
+
     return Scaffold(
         key: _scaffoldKey,
         body: ResponsiveSafeArea(
@@ -58,19 +64,37 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
                                     TextStyle(color: PURPLE_HUE, fontSize: 16),
                               ),
                               GestureDetector(
-                                  onTap: () {
+                                  onTap: () async {
                                     final form = _formKey.currentState;
                                     form.save();
-                                    print(_amount);
-                                    print(_groupName);
+
                                     if ((_groupName != "") && (_amount != "")) {
                                       if (form.validate()) {
-                                        print(_groupName);
+                                        ShowDialog(context: context);
                                         String amount = _amount
                                             .substring(1)
                                             .replaceAll('.', "")
                                             .replaceAll(",", "");
-                                        print(amount);
+
+                                        ApiResponse result = await group.createGroup(
+                                            email: "musabrillz@gmail.com",
+                                            groupRequest: GroupRequest(
+                                                name: _groupName,
+                                                amount: amount)
+                                                .toJson());
+                                          _groupName = "";
+
+                                          _groupController.clear();
+                                          _amountController.clear();
+
+                                        if(result.status) {
+                                          Navigator.of(context).pop();
+                                          ShowSuccessDialog(context: context, msg: result.message);
+                                        } else {
+                                          Navigator.of(context).pop();
+                                          ShowSnackBar(scaffoldKey: _scaffoldKey, msg: result.message);
+                                        }
+
                                       }
                                     } else if (_groupName != "" &&
                                         _amount == "") {
@@ -116,6 +140,7 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
                                     filled: false,
                                     hintText: "Enter group name"),
                                 onSaved: (val) => _groupName = val,
+                                controller: _groupController,
                               ),
                             ),
                           ),
@@ -124,7 +149,7 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
                           margin: EdgeInsets.only(left: 16, right: 16, top: 8),
                           child: TextFormField(
                             keyboardType: TextInputType.number,
-                            controller: _controller,
+                            controller: _amountController,
                             decoration: InputDecoration(
                                 contentPadding:
                                     EdgeInsets.fromLTRB(24.0, 2.0, 2.0, 12.0),

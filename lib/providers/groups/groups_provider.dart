@@ -9,8 +9,8 @@ class GroupsProvider extends ChangeNotifier {
   GroupsProvider.instance()
     : _groupsService = GroupsService();
 
-
-  Future<ApiResponse> createGroup({String email, GroupRequest groupRequest}) async {
+  Future<ApiResponse> createGroup({String email, Map groupRequest}) async {
+      notifyListeners();
       _response = await _groupsService.createGroup(email, groupRequest);
       return _response;
   }

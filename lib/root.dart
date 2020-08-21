@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:splitr/screens/create_group_screen.dart';
 import 'package:splitr/screens/screens.dart';
 
 import 'providers/auth/auth_provider.dart';
@@ -15,8 +16,10 @@ class RootScreen extends StatelessWidget {
         case Status.Authenticating:
         case Status.AccountSettingUp:
           return LoginScreen();
+        case Status.CreateGroup:
+          return CreateGroupScreen();
         case Status.Authenticated:
-          return HomeScreen(user: auth.user);
+          return HomeScreen();
         default:
           return Container();
       }

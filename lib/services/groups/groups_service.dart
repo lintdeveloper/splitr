@@ -88,11 +88,11 @@ class GroupsService implements BaseGroup {
 //  }
 
   @override
-  Future<ApiResponse> createGroup(String email, GroupRequest groupRequest) async {
+  Future<ApiResponse> createGroup(String email, Map groupRequest) async {
     String url = BASE_URL + '/test/api/v1/users/$email/groups';
     final responsePayload = await http.post(url,
         headers: _headers,
-        body: groupRequest.toJson());
+        body: groupRequest);
 
     String responseUTF8 = utf8.decode(responsePayload.bodyBytes);
     final body = jsonDecode(responseUTF8);

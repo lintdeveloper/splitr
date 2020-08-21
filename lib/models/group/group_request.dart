@@ -4,10 +4,5 @@ class GroupRequest {
 
   GroupRequest({this.name, this.amount});
 
-  Map<String, dynamic>  toJson() {
-    return <String, dynamic> {
-      "name": name,
-      "amount": amount
-    };
-  }
+  Map<String, dynamic> toJson() => {"name": name, "amount": amount};
 }

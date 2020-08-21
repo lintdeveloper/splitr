@@ -10,9 +10,8 @@ import 'package:splitr/utils/utils.dart';
 import 'package:splitr/widgets/widgets.dart';
 
 class HomeScreen extends StatefulWidget {
-  HomeScreen({Key key, this.user}) : super(key: key);
-
-  final FirebaseUser user;
+  static const routeName = '/homeScreen';
+  HomeScreen({Key key, }) : super(key: key);
 
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -21,12 +20,14 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
+    final auth = Provider.of<AuthProvider>(context).user;
+
     return Scaffold(
       appBar: AppBar(
         leading: Padding(
           padding: const EdgeInsets.all(8.0),
           child: CircleAvatar(
-              backgroundImage: NetworkImage(widget.user.photoUrl),
+              backgroundImage: NetworkImage(auth.photoUrl),
               backgroundColor: LIGHT_BLUE_ACCENT),
         ),
         centerTitle: true,

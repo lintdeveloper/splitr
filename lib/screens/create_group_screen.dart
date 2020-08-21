@@ -6,6 +6,7 @@ import 'package:line_icons/line_icons.dart';
 import 'package:provider/provider.dart';
 import 'package:splitr/mixins/mixins.dart';
 import 'package:splitr/models/models.dart';
+import 'package:splitr/providers/auth/auth_provider.dart';
 import 'package:splitr/providers/groups/groups_provider.dart';
 import 'package:splitr/utils/consts.dart';
 import 'package:splitr/utils/utils.dart';
@@ -35,6 +36,7 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
   @override
   Widget build(BuildContext context) {
     final group = Provider.of<GroupsProvider>(context);
+    final user = Provider.of<AuthProvider>(context).user;
 
     return Scaffold(
         key: _scaffoldKey,
@@ -77,7 +79,7 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
                                             .replaceAll(",", "");
 
                                         ApiResponse result = await group.createGroup(
-                                            email: "musabrillz@gmail.com",
+                                            email: user.email,
                                             groupRequest: GroupRequest(
                                                 name: _groupName,
                                                 amount: amount)

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:splitr/providers.dart';
 import 'package:splitr/providers/groups/groups_provider.dart';
 import 'package:splitr/root.dart';
 import 'package:splitr/router.dart';
@@ -13,10 +14,7 @@ void main() async {
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown])
       .then((_) => runApp(MultiProvider(
         child: App(),
-        providers: [
-          ChangeNotifierProvider(create: (context) => AuthProvider.instance()),
-          ChangeNotifierProvider(create: (context) => GroupsProvider.instance())
-        ]
+        providers: getProviders()
       ))
   );
 }
@@ -29,7 +27,7 @@ class App extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: lightTheme,
       home: RootScreen(),
-      routes: Router.getRoutes(),
+      routes: getRoutes(),
     );
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:splitr/enums/auth_status.dart';
 import 'package:splitr/screens/create_group_screen.dart';
 import 'package:splitr/screens/screens.dart';
 

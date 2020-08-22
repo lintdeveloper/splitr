@@ -1,17 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:splitr/enums/auth_status.dart';
 import 'package:splitr/models/api_response_model.dart';
 import 'package:splitr/providers/auth/index.dart';
-
-enum Status {
-  Uninitialized,
-  Authenticated,
-  Authenticating,
-  Unauthenticated,
-  AccountSettingUp,
-  CreateGroup
-}
 
 class AuthProvider with ChangeNotifier {
   FirebaseAuth _auth;

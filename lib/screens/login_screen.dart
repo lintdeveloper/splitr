@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
+import 'package:splitr/enums/auth_status.dart';
 import 'package:splitr/mixins/responsive_safe_area.dart';
 import 'package:splitr/models/api_response_model.dart';
 import 'package:splitr/providers/auth/auth_provider.dart';

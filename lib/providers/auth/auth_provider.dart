@@ -28,13 +28,12 @@ class AuthProvider with ChangeNotifier {
   @override
   Future<ApiResponse> signInWithGoogle() async {
     try {
-      _status = Status.Authenticating;
-      notifyListeners();
+      setStatus(Status.Authenticating);
       _response = await _authService.signInWithGoogle(_googleSignIn, _auth);
+
       return _response;
     } catch (e) {
-      _status = Status.Unauthenticated;
-      notifyListeners();
+      setStatus(Status.Unauthenticated);
     }
   }
 
@@ -52,17 +51,17 @@ class AuthProvider with ChangeNotifier {
     }
   }
 
-  void homeScreen() {
-    _status = Status.Authenticated;
+  /// Set app status
+  void setStatus(Status status) {
+    _status = status;
     notifyListeners();
   }
 
-  /// User signs out
+  /// User signs out of google account
   @override
   Future<void> signOutWithGoogle() async {
     _authService.signOutWithGoogle(_googleSignIn, _auth);
-    _status = Status.Unauthenticated;
-    notifyListeners();
+    setStatus(Status.Unauthenticated);
     return Future.delayed(Duration.zero);
   }
 
@@ -73,13 +72,13 @@ class AuthProvider with ChangeNotifier {
     return user;
   }
 
+  /// Auth State Change event
   Future<void> _onAuthStateChanged(FirebaseUser firebaseUser) async {
     if (firebaseUser == null) {
-      _status = Status.Unauthenticated;
+      setStatus(Status.Unauthenticated);
     } else {
       _user = firebaseUser;
-      _status = Status.Authenticated;
+      setStatus(Status.Authenticated);
     }
-    notifyListeners();
   }
 }

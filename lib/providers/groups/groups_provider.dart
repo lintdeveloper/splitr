@@ -1,9 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:splitr/models/group/group.dart';
-import 'package:splitr/models/models.dart';
+import 'package:splitr/models/index.dart';
+import 'package:splitr/providers/groups/base_group.dart';
 import 'package:splitr/services/groups/groups.dart';
 
-class GroupsProvider extends ChangeNotifier {
+class GroupsProvider extends BaseGroup with ChangeNotifier {
   GroupsService _groupsService;
   ApiResponse _response;
   List<GroupList> _groupList;

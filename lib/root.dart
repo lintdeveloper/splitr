@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:splitr/enums/auth_status.dart';
 import 'package:splitr/screens/create_group_screen.dart';
 import 'package:splitr/screens/screens.dart';
-
 import 'providers/auth/auth_provider.dart';
 
 class RootScreen extends StatelessWidget {

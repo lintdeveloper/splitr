@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:splitr/models/models.dart';
+import 'package:splitr/models/index.dart';
 import 'package:splitr/utils/utils.dart';
 
 class MemberItem extends StatelessWidget {

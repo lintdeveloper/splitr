@@ -5,7 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:http/http.dart' as http;
 import 'package:splitr/models/group/group.dart';
-import 'package:splitr/models/models.dart';
+import 'package:splitr/models/index.dart';
 import 'package:splitr/services/auth/base_auth.dart';
 import 'package:splitr/services/groups/base_group.dart';
 import 'package:splitr/utils/utils.dart';

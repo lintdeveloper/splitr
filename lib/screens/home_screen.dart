@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:splitr/mixins/mixins.dart';
+import 'package:splitr/mixins/index.dart';
 import 'package:splitr/models/group/group.dart';
 import 'package:splitr/providers/auth/auth_provider.dart';
 import 'package:splitr/providers/groups/groups_provider.dart';

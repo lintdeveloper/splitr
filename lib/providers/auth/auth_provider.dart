@@ -50,9 +50,10 @@ class AuthProvider extends BaseAuth with ChangeNotifier {
   }
 
   /// Set app status
-  void setStatus(Status status) {
+  Future<void> setStatus(Status status) {
     _status = status;
     notifyListeners();
+    return Future.delayed(Duration.zero);
   }
 
   /// User signs out of google account

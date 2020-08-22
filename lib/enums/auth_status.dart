@@ -3,6 +3,7 @@ enum Status {
   Authenticated,
   Authenticating,
   Unauthenticated,
-  AccountSettingUp,
-  CreateGroup
+  AccountSetup,
+  CreateGroup,
+  GroupCreated
 }

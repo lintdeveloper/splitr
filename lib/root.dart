@@ -15,7 +15,7 @@ class RootScreen extends StatelessWidget {
           return SplashScreen();
         case Status.Unauthenticated:
         case Status.Authenticating:
-        case Status.AccountSettingUp:
+        case Status.AccountSetup:
           return LoginScreen();
         case Status.CreateGroup:
           return CreateGroupScreen();

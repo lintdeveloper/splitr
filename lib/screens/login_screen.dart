@@ -132,7 +132,7 @@ class _LoginScreenState extends State<LoginScreen> {
         } else {
           ShowSnackBar(scaffoldKey: _key, msg: apiResponse.message);
         }},
-      child: user.status == Status.AccountSettingUp ?
+      child: user.status == Status.AccountSetup ?
       Center(child: SpinKitWave(color: PURPLE_HUE, type: SpinKitWaveType.center)) : Container(
         height: 50.0,
         margin: EdgeInsets.fromLTRB(20, 8, 20, 8),

@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:splitr/enums/auth_status.dart';
 import 'package:splitr/models/api_response_model.dart';
+import 'package:splitr/providers/auth/base_provider.dart';
 import 'package:splitr/providers/auth/index.dart';
 
-class AuthProvider with ChangeNotifier {
+class AuthProvider extends BaseAuth with ChangeNotifier {
   FirebaseAuth _auth;
   FirebaseUser _user;
   GoogleSignIn _googleSignIn;
@@ -40,14 +41,11 @@ class AuthProvider with ChangeNotifier {
   /// User setup and account with google
   Future<ApiResponse> setUpWithGoogle() async {
     try {
-      _status = Status.AccountSettingUp;
-      notifyListeners();
+      setStatus(Status.AccountSetup);
       _response = await _authService.setUpWithGoogle(_googleSignIn, _auth);
-      print(_response.status);
       return _response;
     } catch (e) {
-      _status = Status.Unauthenticated;
-      notifyListeners();
+      setStatus(Status.Unauthenticated);
     }
   }
 
